@@ -11,22 +11,36 @@ import SwiftUI
 struct ContentView: View {
     
     @State var alertIsVisible: Bool = false
-    
+    @State var alertKnockIsVisible: Bool = false
     
     var body: some View {
         VStack {
-            Text("Welcome to my first app!")
-                .fontWeight(.bold)
-                .foregroundColor(Color.green)
-            Button(action: {
-                print("Button pressed!")
-                self.alertIsVisible = true
-            }) {
-                Text(/*@START_MENU_TOKEN@*/"Hit Me!"/*@END_MENU_TOKEN@*/)
+            VStack {
+                Text("Welcome to my first app!")
+                    .fontWeight(.bold)
+                    .foregroundColor(Color.green)
+                Button(action: {
+                    print("Button pressed!")
+                    self.alertIsVisible = true
+                }) {
+                    Text(/*@START_MENU_TOKEN@*/"Hit Me!"/*@END_MENU_TOKEN@*/)
+                }
+                .alert(isPresented: $alertIsVisible) { () ->
+                    Alert in
+                    return Alert(title: Text("My first app!"), message: Text("Body aja"), dismissButton: .default(Text("Tutup")))
+                }
             }
-            .alert(isPresented: $alertIsVisible) { () ->
+            Button(action: {
+                self.alertKnockIsVisible = true
+            }) {
+                Text(/*@START_MENU_TOKEN@*/"Knock, Knock!"/*@END_MENU_TOKEN@*/)
+                    .fontWeight(.heavy)
+                    .foregroundColor(Color.red)
+            }
+            .alert(isPresented: $alertKnockIsVisible) {
+                () ->
                 Alert in
-                return Alert(title: Text("My first app!"), message: Text("Body aja"), dismissButton: .default(Text("Tutup")))
+                return Alert(title: Text("Knock Men"), message: Text("Ketuk saya"), dismissButton: .default(Text("Tutup")))
             }
         }
     }
